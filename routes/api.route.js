@@ -37,6 +37,18 @@ router.get("/products/:id", async (req, res, next) => {
 });
 
 // ADD the product
+router.post("/products", async (req, res, next) => {
+  try {
+    const data = req.body;
+    const product = await prisma.product.create({
+      data: req.body,
+    });
+
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
 
 //DELETE the product by id
 router.delete("/products/:id", async (req, res, next) => {
