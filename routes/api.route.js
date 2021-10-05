@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
+//GET all products and categories
 router.get("/products", async (req, res, next) => {
   try {
     const products = await prisma.product.findMany({
@@ -20,18 +21,29 @@ router.get("/products", async (req, res, next) => {
   }
 });
 
+//GET specific products by id
 router.get("/products/:id", async (req, res, next) => {
-  res.send({ message: "Ok api is working 🚀" });
+  try {
+    const { id } = req.params;
+    const product = await prisma.product.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
 });
 
-router.post("/products", async (req, res, next) => {
-  res.send({ message: "Ok api is working 🚀" });
-});
+// ADD the product
 
+//DELETE the product by id
 router.delete("/products/:id", async (req, res, next) => {
   res.send({ message: "Ok api is working 🚀" });
 });
 
+// UPDATE the product by id
 router.patch("/products/:id", async (req, res, next) => {
   res.send({ message: "Ok api is working 🚀" });
 });
