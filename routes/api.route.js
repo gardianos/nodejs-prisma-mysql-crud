@@ -29,6 +29,9 @@ router.get("/products/:id", async (req, res, next) => {
       where: {
         id: Number(id),
       },
+      include: {
+        category: true,
+      },
     });
     res.json(product);
   } catch (error) {
